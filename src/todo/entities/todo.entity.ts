@@ -17,7 +17,7 @@ export class Todo {
   id: number;
 
   @Column({ type: 'enum', default: stateTodo.ACTIVE, enum: stateTodo })
-  state: string;
+  state: stateTodo;
 
   @Column()
   title: string;
