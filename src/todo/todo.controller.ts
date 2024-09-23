@@ -45,7 +45,6 @@ export class TodoController {
     @ActiveUser()
     user: UserActiveInterface,
   ) {
-    console.log(user);
     return this.todoService.findAll(user);
   }
 
