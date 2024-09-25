@@ -100,9 +100,21 @@ export class TodoService {
     return todoUpdateEntity;
   }
 
-  async remove(id: number, user: UserActiveInterface) {
-    await this.findOne(id, user);
-    return await this.todoRepository.softDelete({ id });
+  async remove(id: number, user: UserActiveInterface, request: Request) {
+    const todoEntity = await this.findOne(id, user);
+    const todoEliminated = this.todoRepository.softDelete({ id });
+    const newTodoEntity = await this.findOne(id, user);
+    const userEntity = await this.userService.findUserByEmail(user.email);
+    await this.logTodoAction(
+      newTodoEntity,
+      todoEntity,
+      userEntity,
+      request,
+      'eliminación de tarea',
+      ActionType.UPDATE,
+    );
+
+    return todoEliminated;
   }
 
   //************************************************* */

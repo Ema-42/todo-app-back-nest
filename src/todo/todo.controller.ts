@@ -71,14 +71,18 @@ export class TodoController {
     user: UserActiveInterface,
     @Req() request: Request, //para log
   ) {
-    return this.todoService.update(id, updateTodoDto, user,request);
+    return this.todoService.update(id, updateTodoDto, user, request);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Elimina una tarea específica por su ID' })
   @Auth(Role.USER)
-  remove(@Param('id') id: number, @ActiveUser() user: UserActiveInterface) {
-    return this.todoService.remove(id, user);
+  remove(
+    @Param('id') id: number,
+    @ActiveUser() user: UserActiveInterface,
+    @Req() request: Request,
+  ) {
+    return this.todoService.remove(id, user, request);
   }
 }
